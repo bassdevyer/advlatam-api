@@ -1,14 +1,14 @@
-package com.advlatam.api;
-
-import lombok.Data;
+package com.advlatam.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 @Data
 @Entity
-class Car {
+public class Car {
 
   private @Id @GeneratedValue Long id;
   private String plate;
@@ -17,9 +17,9 @@ class Car {
   private String vin;
   private String additionalInfo;
 
-  Car() {}
+  public Car() {}
 
-  Car(String plate, String color, String model, String vin, String additionalInfo) {
+  public Car(String plate, String color, String model, String vin, String additionalInfo) {
     this.plate = plate;
     this.color = color;
     this.model = model;
