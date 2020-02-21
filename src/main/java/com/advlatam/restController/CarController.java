@@ -39,9 +39,10 @@ public class CarController {
 	}
 
 	@GetMapping("/restriction/{plate}/{dateTime}")
-   public Boolean getRestrictionStatus(@PathVariable String plate, @PathVariable String dateTime ) {
-    	LocalDateTime localDateTime=LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
-        return validator.validateRestriction(plate,localDateTime);
+   public Car getRestrictionStatus(@PathVariable String plate, @PathVariable String dateTime ) {
+		LocalDateTime localDateTime=LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+		Car car = service.findByPlate(plate);
+        return validator.validateRestriction(car,localDateTime);
     }
 
 	@GetMapping("/getCar/{plate}")

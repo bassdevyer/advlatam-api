@@ -3,6 +3,7 @@ package com.advlatam.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class Car {
   private String color;
   private String vin;
   private String additionalInfo;
+  @Transient boolean canCirculate;
 
   public Car() {}
 

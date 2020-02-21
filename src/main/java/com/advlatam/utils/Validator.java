@@ -3,30 +3,32 @@ package com.advlatam.utils;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import com.advlatam.model.Car;
+
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Validator {
 
 	public static final LocalTime initRestriction = LocalTime.of(5, 0);
-	public static final LocalTime endRestriction = LocalTime.of(20, 30);
+	public static final LocalTime endRestriction = LocalTime.of(20, 0);
 	
 
-		public boolean validateRestriction(String plate, LocalDateTime localDateTime) throws NumberFormatException {
-		boolean circula = false;
-		int numberOfPlate = Integer.valueOf(plate.substring(plate.length() - 1));
+	public Car validateRestriction(Car car, LocalDateTime localDateTime) throws NumberFormatException {
+		boolean canCirculate = false;
+		int plateLastDigit = Integer.valueOf(car.getPlate().substring(car.getPlate().length() - 1));
 		int dayOfWeek = localDateTime.toLocalDate().getDayOfWeek().getValue();
 		if (dayOfWeek <= 5) {
-			if (!validatePlateAndDay(numberOfPlate, dayOfWeek)) {
-				circula = validateDateTime(localDateTime.toLocalTime());
+			if (!validatePlateAndDay(plateLastDigit, dayOfWeek)) {
+				canCirculate = validateDateTime(localDateTime.toLocalTime());
 			} else {
-				circula = true;
+				canCirculate = true;
 			}
 		} else {
-			circula = true;
+			canCirculate = true;
 		}
-
-		return circula;
+		car.setCanCirculate(canCirculate);
+		return car;
 	}
 
 	private boolean validateDateTime(LocalTime time) {
