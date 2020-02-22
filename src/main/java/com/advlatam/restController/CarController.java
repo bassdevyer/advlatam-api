@@ -5,11 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.advlatam.model.Car;
@@ -38,9 +40,8 @@ public class CarController {
 		return service.saveCar(newCar);
 	}
 
-	@GetMapping("/restriction/{plate}/{dateTime}")
-   public Car getRestrictionStatus(@PathVariable String plate, @PathVariable String dateTime ) {
-		LocalDateTime localDateTime=LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+	@GetMapping("/restriction/{plate}")
+   public Car getRestrictionStatus(@PathVariable String plate, @RequestParam("localDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime ) {
 		Car car = service.findByPlate(plate);
         return validator.validateRestriction(car,localDateTime);
     }
